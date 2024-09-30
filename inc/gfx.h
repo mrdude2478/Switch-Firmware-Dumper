@@ -7,31 +7,27 @@
 #include FT_FREETYPE_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 //Structs
-typedef struct
-{
-    uint8_t r, g, b, a;
+typedef struct {
+	uint8_t r, g, b, a;
 } clr;
 
-typedef struct
-{
-    FT_Library lib;
-    FT_Face    face[6];
-    FT_Error libRet, faceRet;
-    //Loads to buffer for speed for TTF
-    uint8_t *fntData;
-    bool external;
+typedef struct {
+	FT_Library lib;
+	FT_Face face[6];
+	FT_Error libRet, faceRet;
+	//Loads to buffer for speed for TTF
+	uint8_t *fntData;
+	bool external;
 } font;
 
-typedef struct
-{
-    size_t size;
-    unsigned width, height;
-    uint32_t *data;
+typedef struct {
+	size_t size;
+	unsigned width, height;
+	uint32_t *data;
 } tex;
 
 //Inits needed graphics stuff
@@ -44,39 +40,35 @@ void gfxBeginFrame();
 void gfxEndFrame();
 
 //Creates color from uint32_t
-inline clr clrCreateU32(uint32_t color)
-{
-    clr ret;
-    ret.a = color >> 24 & 0xFF;
-    ret.b = color >> 16 & 0xFF;
-    ret.g = color >>  8 & 0xFF;
-    ret.r = color & 0xFF;
-    return ret;
+inline clr clrCreateU32(uint32_t color) {
+	clr ret;
+	ret.a = color >> 24 & 0xFF;
+	ret.b = color >> 16 & 0xFF;
+	ret.g = color >>  8 & 0xFF;
+	ret.r = color & 0xFF;
+	return ret;
 }
 
 //Sets clr to [r], [g], [b], [a]
-inline clr clrCreateRGBA(uint8_t _r, uint8_t _g, uint8_t _b, uint8_t _a)
-{
-    clr ret;
-    ret.r = _r;
-    ret.g = _g;
-    ret.b = _b;
-    ret.a = _a;
-    return ret;
+inline clr clrCreateRGBA(uint8_t _r, uint8_t _g, uint8_t _b, uint8_t _a) {
+	clr ret;
+	ret.r = _r;
+	ret.g = _g;
+	ret.b = _b;
+	ret.a = _a;
+	return ret;
 }
 
 //Inverts color
-inline void clrInvert(clr *c)
-{
-    c->r = (0xFF - c->r);
-    c->g = (0xFF - c->g);
-    c->b = (0xFF - c->b);
+inline void clrInvert(clr *c) {
+	c->r = (0xFF - c->r);
+	c->g = (0xFF - c->g);
+	c->b = (0xFF - c->b);
 }
 
 //Returns uint32_t color
-inline uint32_t clrGetColor(const clr c)
-{
-    return (c.a << 24 | c.b << 16 | c.g << 8 | c.r);
+inline uint32_t clrGetColor(const clr c) {
+	return (c.a << 24 | c.b << 16 | c.g << 8 | c.r);
 }
 
 //Draws text using f

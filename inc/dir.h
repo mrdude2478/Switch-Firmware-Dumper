@@ -6,22 +6,21 @@
 
 #include "cons.h"
 
-class dirList
-{
-    public:
-        dirList(const std::string& _path);
-        void reassign(const std::string& _path);
-        void rescan();
+class dirList {
+	public:
+		dirList(const std::string& _path);
+		void reassign(const std::string& _path);
+		void rescan();
 
-        std::string getItem(int index);
-        bool isDir(int index);
-        unsigned getCount();
+		std::string getItem(int index);
+		bool isDir(int index);
+		unsigned getCount();
 
-    private:
-        DIR *d;
-        struct dirent *ent;
-        std::string path;
-        std::vector<std::string> item;
+	private:
+		DIR *d;
+		struct dirent *ent;
+		std::string path;
+		std::vector<std::string> item;
 };
 
 void copyFile(const std::string& from, const std::string& to, console *c);

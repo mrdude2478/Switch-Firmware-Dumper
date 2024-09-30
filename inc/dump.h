@@ -2,10 +2,9 @@
 
 #include "cons.h"
 
-typedef struct
-{
-    console *c;
-    bool *thFin;
+typedef struct {
+	console *c;
+	bool *thFin;
 } dumpArgs;
 
 dumpArgs *dumpArgsCreate(console *c, bool *status);

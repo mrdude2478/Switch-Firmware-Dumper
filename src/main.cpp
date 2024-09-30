@@ -50,25 +50,21 @@ $ = Light pink (BGR-e266ff)
 */
 
 console infoCons(28);
-font* sysFont, * consFont;
+font *sysFont, *consFont;
 const char* ctrlStr = "&\ue0e0 Dump Firmware&   $\ue0e3 Delete Pending Update$   ^\ue0e4+\ue0e5 Delete Dumped Firmware^   %\ue0ef Exit%";
 
 tex* top = texCreate(1280, 88);
 tex* bot = texCreate(1280, 72);
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
 	bool dumped;
 	
 	DIR* dir = opendir("sdmc:/Dumped-Firmware");
-	if (dir)
-		{
-			dumped = true;
-		}
-	else
-		{
-			dumped = false;
-		}
+	if (dir) {
+		dumped = true;
+	} else {
+		dumped = false;
+	}
 	closedir(dir);
 
 	graphicsInit(1280, 720);
@@ -111,46 +107,31 @@ int main(int argc, char* argv[])
 	bool threadFin = true;
 	bool run = true;
 
-	while (run)
-	{
-
+	while (run) {
 		// Scan the gamepad. This should be done once for each frame
 		padUpdate(&pad);
 		// padGetButtonsDown returns the set of buttons that have been newly pressed in this frame compared to the previous one
 		u64 kDown = padGetButtonsDown(&pad);		
 		// padGetButtons returns the set of buttons that are currently pressed
-    u64 kHeld = padGetButtons(&pad);
+		u64 kHeld = padGetButtons(&pad);
 
-		if (!threadRunning)
-		{
-			if (kDown & HidNpadButton_A)
-			{
+		if (!threadRunning) {
+			if (kDown & HidNpadButton_A) {
 				infoCons.clear();
-				
 				DIR* dir = opendir("sdmc:/Dumped-Firmware");
-				if (dir)
-					{
-						dumped = true;
-					}
-				else
-					{
-						dumped = false;
-					}
-				
+				if (dir) {
+					dumped = true;
+				} else {
+					dumped = false;
+				}
 				closedir(dir);
-
-				if (!dumped)
-				{
+				if (!dumped) {
 					threadRunning = true, threadFin = false;
-
 					//Struct to send and receive stuff from thread
 					da = dumpArgsCreate(&infoCons, &threadFin);
 					threadCreate(&workThread, dumpThread, da, NULL, 0x4000, 0x2B, -2);
 					threadStart(&workThread);
-				}
-
-				else
-				{
+				} else {
 					threadFin = true;
 					threadRunning = false;
 					infoCons.clear();
@@ -159,40 +140,28 @@ int main(int argc, char* argv[])
 				}
 			}
 			
-			if ((kHeld & HidNpadButton_L) && ( kHeld & HidNpadButton_R))
-			{
+			if ((kHeld & HidNpadButton_L) && ( kHeld & HidNpadButton_R)) {
 				infoCons.clear();
-				
 				DIR* dir = opendir("sdmc:/Dumped-Firmware");
-				if (dir)
-					{
-						dumped = true;
-					}
-				else
-					{
-						dumped = false;
-					}
-				
+				if (dir) {
+					dumped = true;
+				} else {
+					dumped = false;
+				}
 				closedir(dir);
-
-				if (dumped)
-				{
+				if (dumped) {
 					threadRunning = true, threadFin = false;
 					da = dumpArgsCreate(&infoCons, &threadFin);
 					threadCreate(&workThread, cleanThread, da, NULL, 0x4000, 0x2B, -2);
 					threadStart(&workThread);
-				}
-
-				else
-				{
+				} else {
 					infoCons.clear();
 					infoCons.out("Dumped firmware ^isn't^ present on the Micro SD Card.");
 					infoCons.nl();
 				}
 			}
-			
-			if (kDown & HidNpadButton_Y)
-			{
+
+			if (kDown & HidNpadButton_Y) {
 				infoCons.clear();			
 				threadRunning = true, threadFin = false;
 				da = dumpArgsCreate(&infoCons, &threadFin);
@@ -200,17 +169,12 @@ int main(int argc, char* argv[])
 				threadStart(&workThread);
 			}
 
-			if (kDown & HidNpadButton_Plus)
-			{
+			if (kDown & HidNpadButton_Plus) {
 				run = false;
 				break;
 			}
-		}
-
-		else
-		{
-			if (threadFin)
-			{
+		} else {
+			if (threadFin) {
 				//threadFin = true;
 				threadClose(&workThread);
 				dumpArgsDestroy(da);

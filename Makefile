@@ -36,10 +36,10 @@ SOURCES		:=	src
 #DATA		:=	data
 INCLUDES	:=	inc
 EXEFS_SRC	:=	exefs_src
-APP_TITLE   :=  Big (Firmware) Dumper Mod
-APP_AUTHOR  :=  J-D-K (Modded By MrDude)
-APP_VERSION :=  1.0.0
-ROMFS	    :=	romfs
+APP_TITLE	:=	Big (Firmware) Dumper Mod
+APP_AUTHOR	:=	J-D-K (Modded By MrDude)
+APP_VERSION	:=	1.0.1
+ROMFS		:=	romfs
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -51,7 +51,7 @@ override CFLAGS	+=	-g -Wall -O2 -ffunction-sections \
 
 override CFLAGS	+=	$(INCLUDE) -D__SWITCH__ `freetype-config --cflags`
 
-CXXFLAGS:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++14
+CXXFLAGS:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++20
 
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
