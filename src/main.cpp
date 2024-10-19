@@ -59,16 +59,16 @@ tex* bot = texCreate(1280, 72);
 int main(int argc, char* argv[])
 {
 	bool dumped;
-	
+
 	DIR* dir = opendir("sdmc:/Dumped-Firmware");
 	if (dir)
-		{
-			dumped = true;
-		}
+	{
+		dumped = true;
+	}
 	else
-		{
-			dumped = false;
-		}
+	{
+		dumped = false;
+	}
 	closedir(dir);
 
 	graphicsInit(1280, 720);
@@ -117,26 +117,26 @@ int main(int argc, char* argv[])
 		// Scan the gamepad. This should be done once for each frame
 		padUpdate(&pad);
 		// padGetButtonsDown returns the set of buttons that have been newly pressed in this frame compared to the previous one
-		u64 kDown = padGetButtonsDown(&pad);		
+		u64 kDown = padGetButtonsDown(&pad);
 		// padGetButtons returns the set of buttons that are currently pressed
-    u64 kHeld = padGetButtons(&pad);
+		u64 kHeld = padGetButtons(&pad);
 
 		if (!threadRunning)
 		{
 			if (kDown & HidNpadButton_A)
 			{
 				infoCons.clear();
-				
+
 				DIR* dir = opendir("sdmc:/Dumped-Firmware");
 				if (dir)
-					{
-						dumped = true;
-					}
+				{
+					dumped = true;
+				}
 				else
-					{
-						dumped = false;
-					}
-				
+				{
+					dumped = false;
+				}
+
 				closedir(dir);
 
 				if (!dumped)
@@ -158,21 +158,21 @@ int main(int argc, char* argv[])
 					infoCons.nl();
 				}
 			}
-			
-			if ((kHeld & HidNpadButton_L) && ( kHeld & HidNpadButton_R))
+
+			if ((kHeld & HidNpadButton_L) && (kHeld & HidNpadButton_R))
 			{
 				infoCons.clear();
-				
+
 				DIR* dir = opendir("sdmc:/Dumped-Firmware");
 				if (dir)
-					{
-						dumped = true;
-					}
+				{
+					dumped = true;
+				}
 				else
-					{
-						dumped = false;
-					}
-				
+				{
+					dumped = false;
+				}
+
 				closedir(dir);
 
 				if (dumped)
@@ -190,10 +190,10 @@ int main(int argc, char* argv[])
 					infoCons.nl();
 				}
 			}
-			
+
 			if (kDown & HidNpadButton_Y)
 			{
-				infoCons.clear();			
+				infoCons.clear();
 				threadRunning = true, threadFin = false;
 				da = dumpArgsCreate(&infoCons, &threadFin);
 				threadCreate(&workThread, cleanPending, da, NULL, 0x4000, 0x2B, -2);

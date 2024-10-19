@@ -205,7 +205,7 @@ void drawText(const char* str, tex* target, const font* f, int x, int y, int sz,
 			continue;
 		}
 		break;
-		
+
 		case '&':
 		{
 			if (clrGetColor(textClr) == 0xFF009dff) //BGR Colours - https://wamingo.net/rgbbgr/
@@ -216,7 +216,7 @@ void drawText(const char* str, tex* target, const font* f, int x, int y, int sz,
 			continue;
 		}
 		break;
-		
+
 		case '$':
 		{
 			if (clrGetColor(textClr) == 0xFFe266ff)
@@ -238,7 +238,7 @@ void drawText(const char* str, tex* target, const font* f, int x, int y, int sz,
 			continue;
 		}
 		break;
-		
+
 		case '@':
 		{
 			if (clrGetColor(textClr) == 0xFFff0059)
